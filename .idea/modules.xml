@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jobManage/..iml" filepath="$PROJECT_DIR$/jobManage/..iml" />
+      <module fileurl="file://$PROJECT_DIR$/candidateHiringProcess/candidateHiringProcess.iml" filepath="$PROJECT_DIR$/candidateHiringProcess/candidateHiringProcess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hiringProcess/jobManagement.iml" filepath="$PROJECT_DIR$/hiringProcess/jobManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/src.iml" filepath="$PROJECT_DIR$/src/src.iml" />
+    </modules>
+  </component>
+</project>

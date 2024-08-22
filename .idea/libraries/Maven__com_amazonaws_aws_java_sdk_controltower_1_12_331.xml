@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: com.amazonaws:aws-java-sdk-controltower:1.12.331" type="java-imported" external-system-id="Maven">
+    <properties groupId="com.amazonaws" artifactId="aws-java-sdk-controltower" version="1.12.331" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-controltower/1.12.331/aws-java-sdk-controltower-1.12.331.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-controltower/1.12.331/aws-java-sdk-controltower-1.12.331-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-java-sdk-controltower/1.12.331/aws-java-sdk-controltower-1.12.331-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
