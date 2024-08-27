@@ -5,10 +5,9 @@ import hiring.userRegistration.repository.UserRegistrationRepository;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 import hiring.userRegistration.service.UserRegistrationService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import hiring.userRegistration.security.JWTTokenProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hiring.exception.UserNotFoundException;
@@ -86,7 +85,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                 throw new IllegalArgumentException("Invalid password");
             }
         } else {
-            throw new UsernameNotFoundException("User not found");
+            throw new UserNotFoundException("User not found");
         }
     }
 
