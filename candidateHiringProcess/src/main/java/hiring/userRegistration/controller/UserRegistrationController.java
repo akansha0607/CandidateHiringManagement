@@ -1,6 +1,7 @@
 package hiring.userRegistration.controller;
 
 import hiring.exception.UserNotFoundException;
+import hiring.userRegistration.request.ChangePasswordRequest;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 import hiring.userRegistration.service.UserRegistrationService;
@@ -8,10 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -36,5 +36,44 @@ public class UserRegistrationController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UserRegistrationResponse> loginUser(@RequestBody UserRegistrationRequest loginRequest) {
+        UserRegistrationResponse userResponse = userRegistrationService.loginUser(loginRequest);
+        if (userResponse != null) {
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserRegistrationResponse> getUserDetails(@PathVariable Long userId) {
+        UserRegistrationResponse userDetails = userRegistrationService.getUserDetails(userId);
+        return ResponseEntity.ok(userDetails);
+    }
+
+    @PutMapping("/{userId}/role")
+    public ResponseEntity<String> updateUserRole(@PathVariable Long userId, @RequestBody UserRegistrationRequest updateRoleRequest) {
+        userRegistrationService.updateUserRole(userId, updateRoleRequest.getRole());
+        return ResponseEntity.ok("User role updated successfully");
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        userRegistrationService.deleteUser(userId);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @GetMapping("/all/users")
+    public ResponseEntity<List<UserRegistrationResponse>> listAllUsers(@RequestParam(value = "role", required = false) String role) {
+        List<UserRegistrationResponse> users = userRegistrationService.getAllUsers(role);
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/{userId}/password")
+    public ResponseEntity<String> changeUserPassword(@PathVariable Long userId, @RequestBody ChangePasswordRequest changePasswordRequest) {
+        userRegistrationService.changeUserPassword(userId, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
+        return ResponseEntity.ok("Password updated successfully");
+    }
 
 }

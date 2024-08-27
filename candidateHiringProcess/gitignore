@@ -1,0 +1,53 @@
+/target
+/*/.mvn
+/*/log
+/*/logs
+/*/.attach*
+/*/.settings
+/*/target
+/*/.sts4-*
+/.settings
+/*/*/.sts4-cache
+/*/.factorypath
+/*/*/.factorypath
+.classpath
+.project
+.idea
+*.iml
+*.class
+**/*/target
+**/*/.settings
+**/*/log
+log/*
+/.metadata/
+# Ignore target directories and files including XML files
+/target
+**/target
+**/target/*.xml
+
+# Ignore Maven Wrapper and logs
+/*/.mvn
+**/log
+**/logs
+
+# Ignore various IDE-specific files and directories
+/*/.attach*
+/*/.settings
+/*/.sts4-*
+/.settings
+**/.sts4-cache
+/.factorypath
+**/.factorypath
+*.iml
+.idea
+.project
+.classpath
+
+# Ignore compiled class files
+*.class
+
+# Ignore Eclipse metadata
+.metadata/
+
+# Ignore general log files
+log/*
