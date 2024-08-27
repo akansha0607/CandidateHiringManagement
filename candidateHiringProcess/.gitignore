@@ -24,3 +24,4 @@
 
 # Ignore general log files
 log/*
+/target/
