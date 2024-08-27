@@ -1,0 +1,26 @@
+# Ignore Maven target directory and its contents
+/target/
+
+# Ignore Maven Wrapper and logs
+/.mvn/
+**/log
+**/logs
+
+# Ignore IDE-specific files and directories
+/.idea/
+*.iml
+.classpath
+.project
+/.settings/
+*.launch
+
+# Ignore Eclipse-specific metadata and cache
+/.metadata/
+**/.sts4-cache/
+**/.factorypath/
+
+# Ignore compiled class files
+*.class
+
+# Ignore general log files
+log/*
