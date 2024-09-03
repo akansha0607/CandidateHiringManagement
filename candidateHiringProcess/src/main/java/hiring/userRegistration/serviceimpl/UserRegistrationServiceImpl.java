@@ -1,12 +1,16 @@
 package hiring.userRegistration.serviceimpl;
 
 import hiring.userRegistration.model.UserEntity;
+//import hiring.userRegistration.model.UserPrincipal;
 import hiring.userRegistration.repository.UserRegistrationRepository;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 import hiring.userRegistration.service.UserRegistrationService;
-import hiring.userRegistration.security.JWTTokenProvider;
+//import hiring.userRegistration.security.JWTTokenProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,23 +26,20 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private final UserRegistrationRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    private final JWTTokenProvider jwtTokenProvider;
+//    private final JWTTokenProvider jwtTokenProvider;
 
     @Autowired
-    public UserRegistrationServiceImpl(UserRegistrationRepository userRepository,
-                                       PasswordEncoder passwordEncoder,
-                                       JWTTokenProvider jwtTokenProvider) {
+    public UserRegistrationServiceImpl(UserRegistrationRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+//        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public UserRegistrationResponse registerUser(UserRegistrationRequest userDto) {
         UserEntity user = new UserEntity();
         user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());  // Consider encrypting the password
+        user.setPassword(encoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setName(userDto.getName());
         user.setRole(userDto.getRole());
@@ -59,35 +60,35 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         return response;
     }
 
-    public UserRegistrationResponse loginUser(UserRegistrationRequest loginRequest) {
-        // Find user by username
-        Optional<UserEntity> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
-
-        // If user is found and password matches
-        if (optionalUser.isPresent()) {
-            UserEntity user = optionalUser.get();
-            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                // Generate JWT token
-                String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
-
-                // Create and return the response
-                UserRegistrationResponse response = new UserRegistrationResponse();
-                response.setId(user.getId());
-                response.setUsername(user.getUsername());
-                response.setEmail(user.getEmail());
-                response.setName(user.getName());
-                response.setRole(user.getRole());
-                response.setStatus("Success");
-                response.setToken(token);
-
-                return response;
-            } else {
-                throw new IllegalArgumentException("Invalid password");
-            }
-        } else {
-            throw new UserNotFoundException("User not found");
-        }
-    }
+//    public UserRegistrationResponse loginUser(UserRegistrationRequest loginRequest) {
+//        // Find user by username
+//        Optional<UserEntity> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
+//
+//        // If user is found and password matches
+//        if (optionalUser.isPresent()) {
+//            UserEntity user = optionalUser.get();
+//            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+//                // Generate JWT token
+//                String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
+//
+//                // Create and return the response
+//                UserRegistrationResponse response = new UserRegistrationResponse();
+//                response.setId(user.getId());
+//                response.setUsername(user.getUsername());
+//                response.setEmail(user.getEmail());
+//                response.setName(user.getName());
+//                response.setRole(user.getRole());
+//                response.setStatus("Success");
+//                response.setToken(token);
+//
+//                return response;
+//            } else {
+//                throw new IllegalArgumentException("Invalid password");
+//            }
+//        } else {
+//            throw new UserNotFoundException("User not found");
+//        }
+//    }
 
     public UserRegistrationResponse getUserDetails (Long userId){
             Optional<UserEntity> optionalUser = userRepository.findById(userId);
@@ -147,8 +148,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
-            if (passwordEncoder.matches(oldPassword, user.getPassword())) {
-                user.setPassword(passwordEncoder.encode(newPassword));
+            if (encoder.matches(oldPassword, user.getPassword())) {
+                user.setPassword(encoder.encode(newPassword));
                 userRepository.save(user);
             } else {
                 throw new IllegalArgumentException("Old password is incorrect");
@@ -157,5 +158,17 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
             throw new UserNotFoundException("User with ID " + userId + " not found");
         }
     }
+
+
+
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        UserEntity user = userRepository.findByUsername(username);
+//        if (user == null) {
+//            System.out.println("User Not Found");
+//            throw new UsernameNotFoundException("user not found");
+//        }
+//
+//        return new UserPrincipal(user);
+//    }
 
 }

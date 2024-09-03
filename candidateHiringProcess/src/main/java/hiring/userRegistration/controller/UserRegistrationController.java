@@ -5,8 +5,10 @@ import hiring.userRegistration.request.ChangePasswordRequest;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 import hiring.userRegistration.service.UserRegistrationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/hiring/user/register")
+@RequestMapping("/hiring/user")
 public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
@@ -26,7 +28,7 @@ public class UserRegistrationController {
     }
 
     // User Registration(User can be HR, Interviewer or Candidate)
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegistrationRequest request) {
         try {
             UserRegistrationResponse userResponse = userRegistrationService.registerUser(request);
@@ -36,15 +38,22 @@ public class UserRegistrationController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UserRegistrationResponse> loginUser(@RequestBody UserRegistrationRequest loginRequest) {
-        UserRegistrationResponse userResponse = userRegistrationService.loginUser(loginRequest);
-        if (userResponse != null) {
-            return new ResponseEntity<>(userResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-    }
+
+//    @GetMapping("/csrf-token")
+//    public CsrfToken getCsrfToken(HttpServletRequest request) {
+//        return (CsrfToken) request.getAttribute("_csrf");
+//    }
+
+
+//    @PostMapping("/login")
+//    public ResponseEntity<UserRegistrationResponse> loginUser(@RequestBody UserRegistrationRequest loginRequest) {
+//        UserRegistrationResponse userResponse = userRegistrationService.loginUser(loginRequest);
+//        if (userResponse != null) {
+//            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+//    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserRegistrationResponse> getUserDetails(@PathVariable Long userId) {

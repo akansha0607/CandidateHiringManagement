@@ -1,6 +1,7 @@
 package hiring.exceptionHandler;
 
 import hiring.exception.JobNotFoundException;
+import hiring.exception.UserNotFoundException;
 import hiring.exceptionHandler.responseDTO.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleJobNotFoundException(JobNotFoundException ex) {
         ErrorResponse errorResponse = new ErrorResponse("JOB_NOT_FOUND", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     // You can add more exception handlers for different exceptions if needed

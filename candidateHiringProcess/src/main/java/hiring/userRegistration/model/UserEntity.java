@@ -17,13 +17,13 @@ public class UserEntity {
     @Column(name = "id")  // Maps this field to the 'id' column in the 'users' table
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)  // 'username' column, non-nullable, unique
+    @Column(name = "username", nullable = false)  // 'username' column, non-nullable, unique
     private String username;
 
     @Column(name = "password", nullable = false)  // 'password' column, non-nullable
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)  // 'email' column, non-nullable, unique
+    @Column(name = "email", nullable = false)  // 'email' column, non-nullable, unique
     private String email;
 
     @Column(name = "name", nullable = false)  // 'name' column, non-nullable

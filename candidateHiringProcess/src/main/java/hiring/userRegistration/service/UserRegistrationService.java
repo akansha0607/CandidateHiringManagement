@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserRegistrationService {
     UserRegistrationResponse registerUser(UserRegistrationRequest request);
 
-    UserRegistrationResponse loginUser(UserRegistrationRequest loginRequest);
+//    UserRegistrationResponse loginUser(UserRegistrationRequest loginRequest);
 
     UserRegistrationResponse getUserDetails(Long userId);
 
