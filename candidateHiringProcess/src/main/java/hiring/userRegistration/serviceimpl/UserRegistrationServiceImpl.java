@@ -5,8 +5,12 @@ import hiring.userRegistration.model.UserEntity;
 import hiring.userRegistration.repository.UserRegistrationRepository;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
+import hiring.userRegistration.service.JWTService;
 import hiring.userRegistration.service.UserRegistrationService;
 //import hiring.userRegistration.security.JWTTokenProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +27,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
+//
+    @Autowired
+    private JWTService jwtService;
 
+    @Autowired
+    AuthenticationManager authManager;
+
+    @Autowired
     private final UserRegistrationRepository userRepository;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
@@ -41,7 +52,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         user.setUsername(userDto.getUsername());
         user.setPassword(encoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
-        user.setName(userDto.getName());
         user.setRole(userDto.getRole());
 
         // Handle resume if the user is a candidate
@@ -60,35 +70,16 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         return response;
     }
 
-//    public UserRegistrationResponse loginUser(UserRegistrationRequest loginRequest) {
-//        // Find user by username
-//        Optional<UserEntity> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
-//
-//        // If user is found and password matches
-//        if (optionalUser.isPresent()) {
-//            UserEntity user = optionalUser.get();
-//            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-//                // Generate JWT token
-//                String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
-//
-//                // Create and return the response
-//                UserRegistrationResponse response = new UserRegistrationResponse();
-//                response.setId(user.getId());
-//                response.setUsername(user.getUsername());
-//                response.setEmail(user.getEmail());
-//                response.setName(user.getName());
-//                response.setRole(user.getRole());
-//                response.setStatus("Success");
-//                response.setToken(token);
-//
-//                return response;
-//            } else {
-//                throw new IllegalArgumentException("Invalid password");
-//            }
-//        } else {
-//            throw new UserNotFoundException("User not found");
-//        }
-//    }
+
+    public String verify(UserEntity user) {
+        System.out.println("user" + user.toString());
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(user.getUsername());
+        } else {
+            return "fail";
+        }
+    }
 
     public UserRegistrationResponse getUserDetails (Long userId){
             Optional<UserEntity> optionalUser = userRepository.findById(userId);
@@ -100,7 +91,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
                 response.setId(user.getId());
                 response.setUsername(user.getUsername());
                 response.setEmail(user.getEmail());
-                response.setName(user.getName());
                 response.setRole(user.getRole());
 //                if (!optionalUser.isEmpty(user.getResume())) {
 //                    response.setResume(user.getResume());
@@ -140,7 +130,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         } else {
             users = userRepository.findAll();
         }
-        return users.stream().map(user -> new UserRegistrationResponse(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getRole(), user.getResume())).collect(Collectors.toList());
+        return users.stream().map(user -> new UserRegistrationResponse(user.getId(), user.getUsername(), user.getEmail(), user.getRole(), "Active", "")).collect(Collectors.toList());
     }
 
     public void changeUserPassword(Long userId, String oldPassword, String newPassword) {
@@ -159,16 +149,5 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
     }
 
-
-
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        UserEntity user = userRepository.findByUsername(username);
-//        if (user == null) {
-//            System.out.println("User Not Found");
-//            throw new UsernameNotFoundException("user not found");
-//        }
-//
-//        return new UserPrincipal(user);
-//    }
 
 }

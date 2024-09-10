@@ -26,9 +26,6 @@ public class UserEntity {
     @Column(name = "email", nullable = false)  // 'email' column, non-nullable, unique
     private String email;
 
-    @Column(name = "name", nullable = false)  // 'name' column, non-nullable
-    private String name;
-
     @Column(name = "role", nullable = false)  // 'role' column, non-nullable (e.g., HR, Interviewer, Candidate)
     private String role;
 

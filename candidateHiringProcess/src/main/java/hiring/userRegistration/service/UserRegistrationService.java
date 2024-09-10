@@ -1,5 +1,6 @@
 package hiring.userRegistration.service;
 
+import hiring.userRegistration.model.UserEntity;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 
@@ -19,4 +20,6 @@ public interface UserRegistrationService {
     List<UserRegistrationResponse> getAllUsers(String role);
 
     void changeUserPassword(Long userId, String oldPassword, String newPassword);
+
+    String verify(UserEntity user);
 }

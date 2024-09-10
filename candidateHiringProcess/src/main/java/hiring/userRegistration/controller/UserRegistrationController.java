@@ -1,6 +1,7 @@
 package hiring.userRegistration.controller;
 
 import hiring.exception.UserNotFoundException;
+import hiring.userRegistration.model.UserEntity;
 import hiring.userRegistration.request.ChangePasswordRequest;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
@@ -38,22 +39,11 @@ public class UserRegistrationController {
         }
     }
 
-
-//    @GetMapping("/csrf-token")
-//    public CsrfToken getCsrfToken(HttpServletRequest request) {
-//        return (CsrfToken) request.getAttribute("_csrf");
-//    }
-
-
-//    @PostMapping("/login")
-//    public ResponseEntity<UserRegistrationResponse> loginUser(@RequestBody UserRegistrationRequest loginRequest) {
-//        UserRegistrationResponse userResponse = userRegistrationService.loginUser(loginRequest);
-//        if (userResponse != null) {
-//            return new ResponseEntity<>(userResponse, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-//        }
-//    }
+    @PostMapping("/login")
+    public String login(@RequestBody UserEntity user) {
+        System.out.println("user" + user.toString());
+        return userRegistrationService.verify(user);
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserRegistrationResponse> getUserDetails(@PathVariable Long userId) {
