@@ -21,7 +21,7 @@ The **Candidate Hiring Management System** is a Java project designed to streaml
 ### Backend Setup
 ```sh
 # Clone the repository
-git clone https://github.com/your-repo/candidate-hiring-management.git
+git clone https://github.com/akansha0607/CandidateHiringManagement.git
 cd candidate-hiring-management/backend
 
 # Build and run
