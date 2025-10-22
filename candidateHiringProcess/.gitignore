@@ -25,3 +25,7 @@
 # Ignore general log files
 log/*
 /target/
+
+# Ignore IntelliJ project settings
+.idea/
+*.xml

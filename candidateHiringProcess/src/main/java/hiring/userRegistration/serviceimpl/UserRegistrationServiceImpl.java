@@ -1,21 +1,20 @@
 package hiring.userRegistration.serviceimpl;
 
+import hiring.kafka.CandidateProducer;
+import hiring.kafka.NotificationService;
+import hiring.redis.CandidateCache;
+import hiring.redis.CandidateCacheService;
 import hiring.userRegistration.model.UserEntity;
-//import hiring.userRegistration.model.UserPrincipal;
 import hiring.userRegistration.repository.UserRegistrationRepository;
 import hiring.userRegistration.request.UserRegistrationRequest;
 import hiring.userRegistration.response.UserRegistrationResponse;
 import hiring.userRegistration.service.JWTService;
 import hiring.userRegistration.service.UserRegistrationService;
-//import hiring.userRegistration.security.JWTTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hiring.exception.UserNotFoundException;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
-//
+
     @Autowired
     private JWTService jwtService;
 
@@ -36,6 +35,16 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Autowired
     private final UserRegistrationRepository userRepository;
+
+    @Autowired
+    private CandidateProducer candidateProducer;
+
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private CandidateCacheService candidateCacheService;
+
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -60,6 +69,20 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         }
         userRepository.save(user);
 
+        // Kafka event for notifications
+        candidateProducer.sendCandidateEvent(user);
+
+        // Async email notification
+        notificationService.sendEmailAsync(user);
+
+        // Cache candidate in Redis
+        candidateCacheService.cacheCandidateById(new CandidateCache(
+                String.valueOf(user.getId()),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole(),
+                user.getPassword()
+        ));
         UserRegistrationResponse response = new UserRegistrationResponse();
         response.setId(user.getId());
         response.setUsername(user.getUsername());
