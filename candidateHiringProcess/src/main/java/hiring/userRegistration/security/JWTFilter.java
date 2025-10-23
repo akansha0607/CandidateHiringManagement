@@ -27,6 +27,7 @@ public class JWTFilter extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("JWT Filter triggered for: " + request.getRequestURI());
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -45,6 +46,7 @@ public class JWTFilter extends OncePerRequestFilter{
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+        System.out.println("After setting auth: " + SecurityContextHolder.getContext().getAuthentication());
 
         filterChain.doFilter(request, response);
     }
