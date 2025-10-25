@@ -1,0 +1,812 @@
+{
+	"info": {
+		"_postman_id": "25d611c1-0d6f-49ee-bf64-184ffae334d4",
+		"name": "Candidate Hiring Management",
+		"description": "## Overview\n\nThe **Candidate Hiring Management System** is a Java project designed to streamline and automate the hiring process. It enables HR teams to efficiently manage job postings, interview schedules, application reviews, and feedback collection.\n\n## Features\n\n- **Streamlined Hiring Process**: Automates job postings, application reviews, and interview scheduling.\n    \n- **Centralized Management**: Provides a single platform for tracking candidate progress, collecting feedback, and managing interviews.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15522891"
+	},
+	"item": [
+		{
+			"name": "UserRegistration",
+			"item": [
+				{
+					"name": "Register a User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n  \n  \"username\": \"MILI\",\n  \"email\": \"mili@example.com\",\n  \"password\": \"Mill@123\",\n  \"role\": \"HR\",\n  \"phone\": \"9876889910\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login a User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"John@123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Details basis Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTE1NjkwNCwiZXhwIjoxNzYxMTU3MDEyfQ.t5gRSyX7yLg930-pl_4fsGphFtwTVVWDj0VHzs5Lgsc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"John@123\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwMDcyMSwiZXhwIjoxNzYxMjAwODI5fQ.guGh62UZhDn8nyksiG8jnfRnwba_WF4IGQWsc1QwPPc",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"INTERVIEWER\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/6/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"6",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwMDg2MSwiZXhwIjoxNzYxMjAwOTY5fQ.DgYqPrOned9KXoY8yuL0LXGTfxJo98WeTpvq7d1jMZ4",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwMDkzOSwiZXhwIjoxNzYxMjAxMDQ3fQ.BTOBnYlvLQU693Hb7KR_k86JQVj_Hn-9Sa1bP89Zp0M",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"John@123\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/all/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"all",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwMzk4NSwiZXhwIjoxNzYxMjA0MDkzfQ.IEBn0zuYSwWSyVopjGVdI31zyEcFAnLgec6Br143tNk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\": \"$2a$12$x0rtOWY85GX04hkHwdPzEeC4eS4Qsg3AmPCPpmGDsClLUnmjf8k/m\",\n  \"newPassword\": \"milie@123\"\n}\n\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/user/2/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"user",
+								"2",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JobManagement",
+			"item": [
+				{
+					"name": "Create Job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNzQ4NSwiZXhwIjoxNzYxMjA3NTkzfQ.qg5YXQs1jhqt9GzwMCoY7r1J8UFRmDbhhau55UsRReE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Backend Developer\",\n  \"description\": \"Design and develop REST APIs using Java and Spring Boot\",\n  \"location\": \"New York\",\n  \"department\": \"Engineering\",\n  \"experienceRequired\": 3,\n  \"salaryRange\": \"70k-90k\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/job/manage/create/job",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"job",
+								"manage",
+								"create",
+								"job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all jobs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNTgwNiwiZXhwIjoxNzYxMjA1OTE0fQ.jkrI0Xl1eGXdT16rrosn6osau856yuTTpTKmYSPqVKA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/job/manage/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"job",
+								"manage",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get job basis Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNTgwNiwiZXhwIjoxNzYxMjA1OTE0fQ.jkrI0Xl1eGXdT16rrosn6osau856yuTTpTKmYSPqVKA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/job/manage/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"job",
+								"manage",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Job details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNTk4NywiZXhwIjoxNzYxMjA2MDk1fQ.v33Dl_1zRzvT6Smw9tjm2QVZoNHW--04V6oHhA66dOw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Senior Software Engineer\",\n  \"description\": \"Responsible for backend development in Java and mentoring juniors\",\n  \"location\": \"New York\",\n  \"department\": \"Engineering\",\n  \"experienceRequired\": 4,\n  \"salaryRange\": \"80k-100k\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/job/manage/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"job",
+								"manage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete job",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNjQ1MiwiZXhwIjoxNzYxMjA2NTYwfQ.aXjqGr4yTCOATRKRkCicae1sQXvMFeEEj4BTWEsU8u8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/job/manage/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"job",
+								"manage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ApplicationManagement",
+			"item": [
+				{
+					"name": "Create application for a job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNzYwMywiZXhwIjoxNzYxMjA3NzExfQ.C_uTuPcP4gD27Zkr2B4zRIrCzdmauasSfqfNLfeE4qs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"candidateName\": \"Sneha Gupta\",\n  \"email\": \"sneha.gupta@example.com\",\n  \"resume\": \"https://example.com/sneha_resume.pdf\",\n  \"coverLetter\": \"I am eager to work as a frontend developer and build interactive web applications.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/application/manage/2/apply",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"application",
+								"manage",
+								"2",
+								"apply"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all applications for a JobId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNzcwNSwiZXhwIjoxNzYxMjA3ODEzfQ.tZtfQL-Iq7p8F1WlOOI_5NIll31HtIEn5N6--mPW2nI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/application/manage/2/applications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"application",
+								"manage",
+								"2",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get application basis JobId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIwNzcwNSwiZXhwIjoxNzYxMjA3ODEzfQ.tZtfQL-Iq7p8F1WlOOI_5NIll31HtIEn5N6--mPW2nI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/application/manage/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"application",
+								"manage",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update application status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIxMzQ2NCwiZXhwIjoxNzYxMjEzNTcyfQ.0C_gTxY5hdDHzodpI0Sw8CxatAHZDQViOpSWJyMGtEY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"REJECTED\",\n  \"reviewer\": \"Akansha\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/application/manage/4/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"application",
+								"manage",
+								"4",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get application by status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIzNzM1NCwiZXhwIjoxNzYxMjM3NDYyfQ.as8KSSzQjKpYBwJVh4AReAyCWr4YEQUWdU503Ra6Nrk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/application/manage/get/application/by/status?status=REJECTED",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"application",
+								"manage",
+								"get",
+								"application",
+								"by",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "REJECTED"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InterviewScheduling",
+			"item": [
+				{
+					"name": "Schedule an interview",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIzNzgzNiwiZXhwIjoxNzYxMjM3OTQ0fQ.kXiKue4YdsFIYjCF6tQe9afQAG-qNeQ8P__9EHGiSl4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"candidateId\": 2,\n  \"jobId\": 5,\n  \"interviewer\": \"Ravi Kumar\",\n  \"scheduledDateTime\": \"2025-10-25T14:00:00\",\n  \"location\": \"Zoom Meeting\",\n  \"interviewType\": \"TECHNICAL\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/schedule",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Interview details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTIzODA2MCwiZXhwIjoxNzYxMjM4MTY4fQ.Ydy_ZKTwxAqsJzPZn3TRVmTiqibIj6tEMnuAuqUUaNA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"candidateId\": 2,\n  \"jobId\": 5,\n  \"interviewer\": \"Ravi Kumar\",\n  \"scheduledDateTime\": \"2025-10-25T14:00:00\",\n  \"location\": \"Zoom Meeting\",\n  \"interviewType\": \"TECHNICAL\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Interview details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTI0MTE5OSwiZXhwIjoxNzYxMjQxMzA3fQ.wbmh-m3Xz0O4UoxKGeMixSQ1aWK47_orHlu3iPUc78k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"scheduledDateTime\": \"2025-10-26T11:30:00\",\n  \"location\": \"Office - Room 203\",\n  \"interviewType\": \"HR\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel an interview",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTI0MTMxMywiZXhwIjoxNzYxMjQxNDIxfQ.b7RsmZHXHFZ_zWuIRR885-y05LpOzWrECgVmLwRSgeQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"scheduledDateTime\": \"2025-10-26T11:30:00\",\n  \"location\": \"Office - Room 203\",\n  \"interviewType\": \"HR\"\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit interview feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTI0MTk4MSwiZXhwIjoxNzYxMjQyMDg5fQ.f5Axk0Wm4QxxUeF6hqmcrOf-JyGeXDYlTtBtDtuu69Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"interviewer\": \"Anjali Mehta\",\n  \"feedback\": \"Candidate struggled with API design and was unable to explain multithreading properly.\",\n  \"rating\": 4\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/2/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"2",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Interview Feedback",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsImlhdCI6MTc2MTI0MTk4MSwiZXhwIjoxNzYxMjQyMDg5fQ.f5Axk0Wm4QxxUeF6hqmcrOf-JyGeXDYlTtBtDtuu69Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8090/hiring/interview/manage/2/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"hiring",
+								"interview",
+								"manage",
+								"2",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
