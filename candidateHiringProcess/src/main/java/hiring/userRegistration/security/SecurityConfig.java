@@ -37,7 +37,12 @@ public class SecurityConfig {
 
         return http.csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/hiring/user/login", "/hiring/user/register", "/error")
+                        .requestMatchers("/hiring/user/login",
+                                "/hiring/user/register",
+                                "/error",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session ->
